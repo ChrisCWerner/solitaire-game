@@ -4,6 +4,7 @@
   "description": "Simple solitaire game engine to code leisurely on my vacant time.",
   "main": "main.js",
   "scripts": {
+    "test": "jest",
     "start": "node --experimental-modules main.js"
   },
   "repository": {
@@ -16,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/ChrisCWerner/solitaire-game/issues"
   },
-  "homepage": "https://github.com/ChrisCWerner/solitaire-game#readme"
+  "homepage": "https://github.com/ChrisCWerner/solitaire-game#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1"
+  }
 }
