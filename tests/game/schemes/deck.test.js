@@ -19,6 +19,49 @@ describe("new deck", () => {
       });
     });
   });
+});
 
-  // test each method inside Deck()
+describe("deck methods", () => {
+  it("should shuffle the deck", () => {
+    const deck = Deck();
+    deck.generate();
+    const before = deck.get().slice();
+    deck.shuffle();
+    expect(deck.get()).toStrictEqual(expect.arrayContaining(before));
+    expect(deck.get()).not.toStrictEqual(before);
+  });
+
+  it("should cut the deck", () => {
+    const deck = Deck();
+    deck.generate();
+    const before = deck.get().slice();
+    deck.cut();
+    expect(deck.get()).toStrictEqual(expect.arrayContaining(before));
+    expect(deck.get()).not.toStrictEqual(before);
+  });
+
+  it("should buy a card from top of deck", () => {
+    const deck = Deck();
+    deck.generate();
+    const lastCard = deck.get().slice(-1);
+    const card = deck.buy(1);
+    expect(card).not.toStrictEqual(expect.arrayContaining(deck.get()));
+    expect(card).toStrictEqual(lastCard);
+  });
+
+  it("should put card on bottom of deck", () => {
+    const deck = Deck();
+    deck.generate();
+    const card = deck.buy(1);
+    deck.putBack(card);
+    expect(deck.get().slice(0, 1)).toStrictEqual(card);
+  });
+
+  it("should empty full deck", () => {
+    const deck = Deck();
+    deck.generate();
+    expect(deck.get().length).toBeGreaterThan(0);
+    deck.empty();
+    expect(deck.get().length).toBe(0);
+  });
 });

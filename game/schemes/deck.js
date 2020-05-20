@@ -41,7 +41,7 @@ const Deck = ({ cards = [] } = {}) => {
     index = index || Math.floor(Math.random() * l);
     index = index % l || Math.floor(l / 2);
     const cutted = buy(index);
-    putBack(...cutted);
+    putBack(cutted);
     return cutted;
   };
 
