@@ -1,0 +1,20 @@
+{
+  "name": "solitaire",
+  "version": "1.0.0",
+  "description": "Simple solitaire game engine to code leisurely on my vacant time.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node --experimental-modules main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisCWerner/solitaire-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisCWerner/solitaire-game/issues"
+  },
+  "homepage": "https://github.com/ChrisCWerner/solitaire-game#readme"
+}
