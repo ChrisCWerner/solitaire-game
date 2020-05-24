@@ -24,6 +24,18 @@ const fillAllColumns = (deck) => {
   return columns;
 };
 
+const clearTarget = (target) => {
+  target.hearts = [];
+  target.clubs = [];
+  target.diamonds = [];
+  target.spades = [];
+};
+
+const generateColumns = (columns, deck) => {
+  columns.length = 0;
+  columns.push(...fillAllColumns(deck.get()));
+};
+
 const Solitaire = ({
   __deck = Deck(),
   __openCards = Deck(),
@@ -32,35 +44,35 @@ const Solitaire = ({
   // validate options
   if (!validateDeck(__deck)) throw new Error("Invalid deck!");
 
-  const openCards = __openCards;
-  const deck = __deck;
-  let game = __game;
+  const target = {};
+  const columns = [];
+  const openCards = {...__openCards};
+  const deck = {...__deck};
+  let game = {...__game};
 
   const currentGame = () => game;
 
-  const newGame = () => {
-    deck.generate();
-    deck.shuffle();
-    openCards.empty();
+  const openDeck = ({ _deck = deck, challenge = 1 } = {}) => {
+    let cards = openCards.empty();
+    _deck.putBack(cards);
+    cards = _deck.buy(challenge);
+    openCards.putBack(cards);
+    return openCards.get();
+  };
 
-    const openDeck = ({ challenge = 1 } = {}) => {
-      let cards = openCards.empty();
-      deck.putBack(cards);
-      cards = deck.buy(challenge);
-      openCards.putBack(cards);
-      return openCards.get();
-    };
+  const newGame = ({ _deck = deck } = {}) => {
+    // initialize game: clear open cards, clear targets, generate deck, generate columns
+    openCards.empty();
+    clearTarget(target);
+    _deck.generate();
+    _deck.shuffle();
+    generateColumns(columns, _deck);
 
     game = {
-      deck: deck.get(),
-      openCards: openCards.get(),
-      target: {
-        hearts: [],
-        clubs: [],
-        diamonds: [],
-        spades: [],
-      },
-      columns: fillAllColumns(deck.get()),
+      deck: _deck.getStatic(),
+      openCards: openCards.getStatic(),
+      target,
+      columns,
       openDeck,
     };
     // eslint-disable-next-line no-console
