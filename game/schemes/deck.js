@@ -8,6 +8,8 @@ const Deck = ({ cards = [] } = {}) => {
 
   const get = () => deck;
 
+  const getStatic = () => Object.freeze([...deck]);
+
   const empty = () => buy(0);
 
   const generate = (pick = null) => {
@@ -48,6 +50,7 @@ const Deck = ({ cards = [] } = {}) => {
   return {
     deck,
     get,
+    getStatic,
     empty,
     generate,
     shuffle,

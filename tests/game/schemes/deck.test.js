@@ -64,4 +64,13 @@ describe("deck methods", () => {
     deck.empty();
     expect(deck.get().length).toBe(0);
   });
+
+  it("should only read the deck", () => {
+    const deck = Deck();
+    deck.generate();
+    const cards = deck.getStatic();
+    const otherDeck = Deck({ cards });
+    expect(() => cards.push({ suit: "red", rank: "joker" })).toThrowError();
+    expect(() => otherDeck.cut()).toThrowError();
+  });
 });
