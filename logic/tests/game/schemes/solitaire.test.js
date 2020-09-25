@@ -22,8 +22,10 @@ describe("solitaire game", () => {
   it("should create new instance of old game", () => {
     const solitaire = Solitaire();
     const oldGame = solitaire.newGame();
-    const newGame = Solitaire({ __game: oldGame });
+    const newGame = Solitaire({ game: oldGame }).currentGame().currentGame();
     expect(newGame).toMatchObject(oldGame);
     expect(newGame).not.toBe(oldGame);
   });
+
+  
 });

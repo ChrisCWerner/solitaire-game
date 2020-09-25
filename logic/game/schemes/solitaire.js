@@ -36,51 +36,51 @@ const generateColumns = (columns, deck) => {
   columns.push(...fillAllColumns(deck.get()));
 };
 
-const Solitaire = ({
-  __deck = Deck(),
-  __openCards = Deck(),
-  __game = null,
-} = {}) => {
+const Solitaire = (game = { deck = Deck(), openCards = Deck(), target = {}, columns = [] }) => {
+// const Solitaire = ({ deck = Deck(), openCards = Deck(), game = null } = {}) => {
   // validate options
-  if (!validateDeck(__deck)) throw new Error("Invalid deck!");
+  if (!validateDeck(game.deck)) throw new Error("Invalid deck!");
 
-  const target = {};
-  const columns = [];
-  const openCards = {...__openCards};
-  const deck = {...__deck};
-  let game = {...__game};
+  const _target = game.target;
+  const _columns = game.columns;
+  const _openCards = { ...game.openCards };
+  const _deck = { ...game.deck };
+  let _game = { ...game };
 
-  const currentGame = () => game;
+  const currentGame = () => _game;
 
-  const openDeck = ({ _deck = deck, challenge = 1 } = {}) => {
-    let cards = openCards.empty();
-    _deck.putBack(cards);
-    cards = _deck.buy(challenge);
-    openCards.putBack(cards);
-    return openCards.get();
+  const openDeck = ({ deck = _deck, challenge = 1 } = {}) => {
+    let cards = _openCards.empty();
+    deck.putBack(cards);
+    cards = deck.buy(challenge);
+    _openCards.putBack(cards);
+    return _openCards.get();
   };
 
-  const newGame = ({ _deck = deck } = {}) => {
+  const newGame = ({ deck = _deck } = {}) => {
     // initialize game: clear open cards, clear targets, generate deck, generate columns
-    openCards.empty();
-    clearTarget(target);
-    _deck.generate();
-    _deck.shuffle();
-    generateColumns(columns, _deck);
+    _openCards.empty();
+    clearTarget(_target);
+    deck.generate();
+    deck.shuffle();
+    generateColumns(_columns, deck);
 
-    game = {
-      deck: _deck.getStatic(),
-      openCards: openCards.getStatic(),
-      target,
-      columns,
+    _game = {
+      deck: deck.getStatic(),
+      openCards: _openCards.getStatic(),
+      target: _target,
+      columns: _columns,
       openDeck,
+      currentGame,
+      newGame,
     };
     // eslint-disable-next-line no-console
-    // console.log(game)
+    // console.log(_game)
     return currentGame();
   };
 
   return {
+    game: _game,
     newGame,
     currentGame,
   };
